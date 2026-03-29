@@ -1,1 +1,1 @@
-# ftpt-client
+# tftp-client
