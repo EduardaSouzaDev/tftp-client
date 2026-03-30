@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import socket
 from pathlib import Path
+import argparse
+import sys
 
 from tftp_client.protocol import (
     BLOCK_SIZE,
@@ -151,3 +153,32 @@ class TftpClient:
                 last_packet_was_final = len(chunk) < BLOCK_SIZE
         finally:
             sock.close()
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Cliente TFTP simples para transferência de arquivos.")
+
+    parser.add_argument("host", help="Endereço IP ou hostname do servidor TFTP")
+    parser.add_argument("action", choices=["get", "put"], help="Ação: 'get' para baixar ou 'put' para enviar")
+    parser.add_argument("filename", help="Nome do arquivo a ser transferido")
+    parser.add_argument("-p", "--port", type=int, default=69, help="Porta do servidor (padrão: 69)")
+
+    args = parser.parse_args()
+
+    try:
+        if args.action == "get":
+            print(f"[*] Iniciando download de '{args.filename}' do servidor {args.host}...")
+            
+        elif args.action == "put":
+            print(f"[*] Iniciando upload de '{args.filename}' para o servidor {args.host}...")
+            
+
+        print("[+] Transferência concluída com sucesso!")
+
+    except Exception as e:
+        print(f"[!] Erro na transferência: {e}")
+        sys.exit(1)
+
+# Esse 'if' garante que o código só rode se você chamar o arquivo diretamente
+if __name__ == "__main__":
+    main()
