@@ -82,3 +82,34 @@ python -m pytest tests
 - `src/tftp_client/client.py` — lógica de rede (download e upload)
 - `src/tftp_client/cli.py` — argumentos da linha de comandos
 - `tests/` — testes unitários (principalmente protocolo)
+## Diagramas C4
+
+### Contexto
+![Contexto](contexto_v3.png)
+
+- Usuário executa o cliente via CLI  
+- Cliente TFTP se comunica com servidor  
+- Comunicação via UDP (TFTP)  
+
+---
+
+### Containers
+![Containers](containers_v4.png)
+
+- CLI: entrada de comandos  
+- TftpClient: lógica principal  
+- protocol.py: tratamento de pacotes  
+- Sistema de arquivos: leitura/escrita  
+- Comunicação UDP  
+
+---
+
+### Componentes
+![Componentes](componentes_v3.png)
+
+- download(): recebe arquivos  
+- upload(): envia arquivos  
+- _open_socket(): cria socket  
+- protocol.py: build/parse  
+- socket: comunicação  
+- filesystem: arquivos  
